@@ -92,31 +92,60 @@ def is_user_in_channel(user_id):
         return member.status in ['member', 'administrator', 'creator']
     except:
         return False
+# Global variable to track active attack
+global_attack_active = False
+
 @bot.message_handler(commands=['attack'])
 def handle_attack(message):
-    global global_active_attack
+    global global_attack_active
 
     user_id = str(message.from_user.id)
 
-    # Check if any attack is already active
-    if global_active_attack is not None and global_active_attack != user_id:
-        bot.reply_to(message, "⚠️ **Ek aur banda attack kar raha hai, thoda wait karo!**")
+    # Check if an attack is already running
+    if global_attack_active:
+        bot.reply_to(message, "⚠️ **EK ATTACK PEHLE SE CHAL RAHA HAI!** ⏳\n🚀 *KRIPYA RUKO, ATTACK KHATAM HONE KA INTEZAR KAREIN!*")
         return
 
-    # Attack chalu hone se pehle user ko global lock mein daal do
-    global_active_attack = user_id
+    # Attack start hone wala hai, flag ko True karein
+    global_attack_active = True
 
     try:
-        # Yaha aapka existing attack logic rahega
-        bot.reply_to(message, "🚀 **Attack start ho gaya!**")
+        user_name = message.from_user.first_name
+        command = message.text.split()
 
-        # Fake attack duration (real duration aapke code ke hisaab se set karein)
-        time.sleep(10)  
+        if len(command) != 4:
+            bot.reply_to(message, "⚠️ **USAGE:** /attack `<IP>` `<PORT>` `<TIME>`")
+            global_attack_active = False  # Reset flag if command is incorrect
+            return
 
-        bot.reply_to(message, "✅ **Attack complete!**")
+        target, port, time_duration = command[1], command[2], command[3]
+
+        try:
+            port = int(port)
+            time_duration = int(time_duration)
+        except ValueError:
+            bot.reply_to(message, "❌ **ERROR:** PORT aur TIME integers hone chahiye!")
+            global_attack_active = False  # Reset flag
+            return
+
+        if time_duration > 180:
+            bot.reply_to(message, "🚫 **MAX DURATION = 180s!**")
+            global_attack_active = False  # Reset flag
+            return
+
+        bot.reply_to(message, f"🔥 **ATTACK START HO GYA!** 🚀\n🎯 TARGET: `{target}:{port}`\n⏳ DURATION: `{time_duration}s`")
+
+        # Simulate attack process (Replace this with actual attack command)
+        time.sleep(time_duration)  # Simulating attack duration
+
+        bot.reply_to(message, "✅ **ATTACK COMPLETE!** 🔥")
+
+    except Exception as e:
+        bot.reply_to(message, f"❌ **ERROR:** {str(e)}")
+
     finally:
-        # Jab attack complete ho jaye, tab global lock hata do
-        global_active_attack = None
+        # Attack complete hone ke baad flag ko False karein
+        global_attack_active = False
 
     if message.chat.id != int(GROUP_ID):
         bot.reply_to(message, f"🚫 𝐘𝐄 𝐁𝐎𝐓 𝐒𝐈𝐑𝐅 𝐆𝐑𝐎𝐔𝐏 𝐌𝐄 𝐂𝐇𝐀𝐋𝐄𝐆𝐀 ❌\n🔗 𝐉𝐨𝐢𝐧 𝐍𝐨𝐖: {CHANNEL_USERNAME}")
