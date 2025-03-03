@@ -96,8 +96,6 @@ def is_user_in_channel(user_id):
 def handle_attack(message):
     global global_attack_active
 
-    user_id = str(message.from_user.id)
-
     # Check if an attack is already running
     if global_attack_active:
         bot.reply_to(message, "⚠️ **LAUDE ATTACK ALREDY CHAL REHA HAI!** ⏳\n🚀 *KHATM HONE TAK WAIT KRO!*")
