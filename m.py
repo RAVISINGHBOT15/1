@@ -96,7 +96,6 @@ def is_user_in_channel(user_id):
 @bot.message_handler(func=lambda message: message.text == "🚀 Attack")
 def handle_attack(message):
     global attack_in_process  # Access the global variable
-    user_id = str(message.chat.id
 
     user_id = str(message.from_user.id)
     user_name = message.from_user.first_name
