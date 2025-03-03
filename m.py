@@ -12,7 +12,7 @@ import os
 import sys
 import socket
 # Insert your Telegram bot token here
-bot = telebot.TeleBot('7555897511:AAF1HgbyA8SRCdmOKKpg7er2kwjA_Et5GD8')
+bot = telebot.TeleBot('7555897511:AAF1HgbyA8SRCdmOKKpg7er2kwjA_Et5GD8)
 
 
 # Admin user IDs
@@ -20,7 +20,7 @@ admin_id = ["7129010361"]
 
 # Group and channel details
 GROUP_ID = "-1002369239894"
-CHANNEL_USERNAME = "@KHAPITAR_BALAK77"
+CHANNEL_USERNAME = "@R_SDanger_op"
 
 # Default cooldown and attack limits
 COOLDOWN_TIME = 0  # Cooldown in seconds
@@ -92,9 +92,6 @@ def is_user_in_channel(user_id):
         return member.status in ['member', 'administrator', 'creator']
     except:
         return False
-# Global variable to track active attack
-global_attack_active = False
-
 @bot.message_handler(commands=['attack'])
 def handle_attack(message):
     global global_attack_active
@@ -109,7 +106,11 @@ def handle_attack(message):
     # Attack start hone wala hai, flag ko True karein
     global_attack_active = True
 
-if message.chat.id != int(GROUP_ID):
+    user_id = str(message.from_user.id)
+    user_name = message.from_user.first_name
+    command = message.text.split()
+
+    if message.chat.id != int(GROUP_ID):
         bot.reply_to(message, f"🚫 𝐘𝐄 𝐁𝐎𝐓 𝐒𝐈𝐑𝐅 𝐆𝐑𝐎𝐔𝐏 𝐌𝐄 𝐂𝐇𝐀𝐋𝐄𝐆𝐀 ❌\n🔗 𝐉𝐨𝐢𝐧 𝐍𝐨𝐖: {CHANNEL_USERNAME}")
         return
 
@@ -357,6 +358,7 @@ while True:
         
         
  
+
 
 
 
