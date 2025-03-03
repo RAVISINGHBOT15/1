@@ -21,7 +21,13 @@ admin_id = ["7129010361"]
 # Group and channel details
 GROUP_ID = "-1002369239894"
 CHANNEL_USERNAME = "@KHAPITAR_BALAK77"
-
+try:
+            port = int(port)
+            time_duration = int(time_duration)
+        except ValueError:
+            bot.reply_to(message, "❌ **ERROR:** PORT aur TIME integers hone chahiye!")
+            global_attack_active = False  # Reset flag
+            return
 # Default cooldown and attack limits
 COOLDOWN_TIME = 0  # Cooldown in seconds
 ATTACK_LIMIT = 10  # Max attacks per day
@@ -103,7 +109,7 @@ def handle_attack(message):
 
     # Check if an attack is already running
     if global_attack_active:
-        bot.reply_to(message, "⚠️ **EK ATTACK PEHLE SE CHAL RAHA HAI!** ⏳\n🚀 *KRIPYA RUKO, ATTACK KHATAM HONE KA INTEZAR KAREIN!*")
+        bot.reply_to(message, "⚠️ **LAUDE ATTACK ALREDY CHAL REHA HAI!** ⏳\n🚀 *KHATM HONE TAK WAIT KRO!*")
         return
 
     # Attack start hone wala hai, flag ko True karein
@@ -119,29 +125,6 @@ def handle_attack(message):
             return
 
         target, port, time_duration = command[1], command[2], command[3]
-
-        try:
-            port = int(port)
-            time_duration = int(time_duration)
-        except ValueError:
-            bot.reply_to(message, "❌ **ERROR:** PORT aur TIME integers hone chahiye!")
-            global_attack_active = False  # Reset flag
-            return
-
-        if time_duration > 180:
-            bot.reply_to(message, "🚫 **MAX DURATION = 180s!**")
-            global_attack_active = False  # Reset flag
-            return
-
-        bot.reply_to(message, f"🔥 **ATTACK START HO GYA!** 🚀\n🎯 TARGET: `{target}:{port}`\n⏳ DURATION: `{time_duration}s`")
-
-        # Simulate attack process (Replace this with actual attack command)
-        time.sleep(time_duration)  # Simulating attack duration
-
-        bot.reply_to(message, "✅ **ATTACK COMPLETE!** 🔥")
-
-    except Exception as e:
-        bot.reply_to(message, f"❌ **ERROR:** {str(e)}")
 
     finally:
         # Attack complete hone ke baad flag ko False karein
@@ -226,7 +209,7 @@ def handle_attack(message):
                      f"✅ **𝐀𝐓𝐓𝐀𝐂𝐊 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐄!** ✅\n"
                      f"🎯 `{target}:{port}` **𝐃𝐄𝐒𝐓𝐑𝐎𝐘𝐄𝐃!**\n"
                      f"⏳ **𝐃𝐔𝐑𝐀𝐓𝐈𝐎𝐍:** {time_duration}𝙨\n"
-                     f"⚡ **𝐑𝐄𝐌𝐀𝐈𝐍𝐈𝐍𝐆 𝐀𝐓𝐓𝐀𝐂𝐊𝐒:** {remaining_attacks}\n"
+                     f"⚡ **𝐑𝐄𝐌𝐀𝐈𝐍𝐈𝐍𝐆 𝐀𝐓??𝐀𝐂𝐊𝐒:** {remaining_attacks}\n"
                      f"⏳ **𝐏𝐑𝐎𝐆𝐑𝐄𝐒𝐒: 110%**")
 
     threading.Thread(target=send_attack_finished, args=(message, user_name, target, port, time_duration, remaining_attacks)).start()
