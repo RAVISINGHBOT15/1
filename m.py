@@ -96,6 +96,8 @@ def is_user_in_channel(user_id):
 def handle_attack(message):
     global global_attack_active
 
+    user_id = str(message.from_user.id)
+
     # Check if an attack is already running
     if global_attack_active:
         bot.reply_to(message, "⚠️ **LAUDE ATTACK ALREDY CHAL REHA HAI!** ⏳\n🚀 *KHATM HONE TAK WAIT KRO!*")
@@ -103,10 +105,6 @@ def handle_attack(message):
 
     # Attack start hone wala hai, flag ko True karein
     global_attack_active = True
-
-    user_id = str(message.from_user.id)
-    user_name = message.from_user.first_name
-    command = message.text.split()
 
     if message.chat.id != int(GROUP_ID):
         bot.reply_to(message, f"🚫 𝐘𝐄 𝐁𝐎𝐓 𝐒𝐈𝐑𝐅 𝐆𝐑𝐎𝐔𝐏 𝐌𝐄 𝐂𝐇𝐀𝐋𝐄𝐆𝐀 ❌\n🔗 𝐉𝐨𝐢𝐧 𝐍𝐨𝐖: {CHANNEL_USERNAME}")
