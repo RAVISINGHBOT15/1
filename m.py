@@ -97,14 +97,16 @@ def handle_attack(message):
     global global_attack_active
 
     user_id = str(message.from_user.id)
-    user_name = message.from_user.first_name
-    command = message.text.split()
     
     # Check if an attack is already running
     if global_attack_active:
         bot.reply_to(message, "⚠️ **LAUDE ATTACK ALREDY CHAL REHA HAI!** ⏳\n🚀 *KHATM HONE TAK WAIT KRO!*")
         return
-
+        
+    try:
+     user_name = message.from_user.first_name
+     command = message.text.split()
+        
     # Attack start hone wala hai, flag ko True karein
     global_attack_active = True
 
