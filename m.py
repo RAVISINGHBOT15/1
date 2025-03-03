@@ -96,21 +96,15 @@ def is_user_in_channel(user_id):
 @bot.message_handler(func=lambda message: message.text == "🚀 Attack")
 def handle_attack(message):
     global attack_in_process  # Access the global variable
-    user_id = str(message.chat.id)
-    
-    # Check if the user has enough coins for the attack
-    if user_id not in user_coins or user_coins[user_id] < ATTACK_COST:
-        response = f"⛔️ 𝗔𝗰𝗰𝗲𝘀𝘀 𝗗𝗲𝗻𝗶𝗲𝗱! ⛔️\n\nOops! It seems like you don't have enough coins to use the Attack command. To gain coins and unleash the power of attacks, you can:\n\n👉 Contact an Admin or the Owner for coins.\n🌟 Become a proud supporter and purchase coins.\n💬 Chat with an admin now and level up your experience!\n\nPer attack it cost only {ATTACK_COST} coins!"
-        bot.reply_to(message, response)
-        return
-    
-    if attack_in_process:
-        bot.reply_to(message, "⛔️ 𝗔𝗻 𝗮𝘁𝘁𝗮𝗰𝗸 𝗶𝘀 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗶𝗻 𝗽𝗿𝗼𝗰𝗲𝘀𝘀.\n𝗨𝘀𝗲 /check 𝘁𝗼 𝘀𝗲𝗲 𝗿𝗲𝗺𝗮𝗶𝗻𝗶𝗻𝗴 𝘁𝗶𝗺𝗲!")
-        return
+    user_id = str(message.chat.id
 
     user_id = str(message.from_user.id)
     user_name = message.from_user.first_name
     command = message.text.split()
+
+bot.reply_to(message, "⏳ **Ek attack already chal raha hai, aap queue me add ho gaye ho!**")
+        attack_queue.append(message)
+        return
 
     if message.chat.id != int(GROUP_ID):
         bot.reply_to(message, f"🚫 𝐘𝐄 𝐁𝐎𝐓 𝐒𝐈𝐑𝐅 𝐆𝐑𝐎𝐔𝐏 𝐌𝐄 𝐂𝐇𝐀𝐋𝐄𝐆𝐀 ❌\n🔗 𝐉𝐨𝐢𝐧 𝐍𝐨𝐖: {CHANNEL_USERNAME}")
